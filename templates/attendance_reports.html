@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Reports</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2980b9;
+        }
+        .date-filter-form {
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .date-filter-form form {
+            display: inline-block;
+        }
+        
+        .date-filter-form label {
+            font-size: 1.1em;
+            margin-right: 10px;
+            color: #2c3e50;
+        }
+        
+        .date-filter-form input[type="date"] {
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1em;
+            width: 180px;
+            margin-right: 10px;
+        }
+        
+        .date-filter-form button.btn {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .date-filter-form button.btn:hover {
+            background-color: #1a669c;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #2980b9;
+            color: white;
+        }
+        tr:hover {
+            background-color: #f1f1f1; /* Highlight on hover */
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .back-to-dashboard {
+            text-align: center;
+            margin-top: 20px;
+        }
+        .btn {
+            background-color: #2980b9;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+        .btn:hover {
+            background-color: #1a669c;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Attendance Reports</h1>
+        <!-- Date Filter Form -->
+        <div class="date-filter">
+            <form action="/attendance_reports" method="POST">
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" name="date" required>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Number</th>
+                    <th>Student Name</th>
+                    <th>Date</th>
+                    <th>Bus In Time</th>
+                    <th>Bus Out Time</th>
+                    <th>Campus In Time</th>
+                    <th>Campus Out Time</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if attendance_records %}
+                    {% for record in attendance_records %}
+                        <tr>
+                            <td>{{ record.student.student_num }}</td>
+                            <td>{{ record.student.name }} {{ record.student.surname }}</td>
+                            <td>{{ record.date }}</td>
+                            <td>{{ record.bus_in_time }}</td>
+                            <td>{{ record.bus_out_time }}</td>
+                            <td>{{ record.campus_in_time }}</td>
+                            <td>{{ record.campus_out_time }}</td>
+                            <td>{{ record.status }}</td>
+                            <td>
+                                {% if record.status in ['Absent', 'Late'] %}
+                                    <form action="/send_alert" method="POST">
+                                        <input type="hidden" name="student_id" value="{{ record.student.id }}">
+                                        <input type="hidden" name="parent_id" value="{{ record.student.parent_id }}">
+                                        <input type="hidden" name="status" value="{{ record.status }}">
+                                        <input type="hidden" name="date" value="{{ record.date }}">
+                                        <button type="submit">Send Alert</button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="9">No attendance records found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <div class="back-to-dashboard">
+            <a href="/school_authority_dashboard" class="btn">Back to Dashboard</a>
+        </div>
+    </div>
+</body>
+</html>

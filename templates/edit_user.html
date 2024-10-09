@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit User</title>
+    <link rel="stylesheet" href="/static/styles.css">  <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Edit User</h1>
+        <form method="POST" action="">
+            <input type="text" name="username" placeholder="Username" value="{{ user.username }}" required>
+            <input type="email" name="email" placeholder="Email" value="{{ user.email }}" required>
+            <input type="password" name="password" placeholder="Password (leave blank to keep current)">
+            <button type="submit" class="btn">Update User</button>
+        </form>
+        <div class="back-to-manage">
+            <a href="/manage_users" class="btn">Back to Manage Users</a>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Student Details</title>
+    <link rel="stylesheet" href="/static/styles.css">  <!-- Link to your CSS file -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            width: 50%;  /* Reduced width */
+            margin: 20px auto;
+            padding: 15px;  /* Reduced padding */
+            background-color: #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+        input[type="text"], input[type="number"] {
+            width: 50%;
+            padding: 10px;  /* Reduced padding for input boxes */
+            margin: 8px 0;  /* Reduced margin */
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            font-size: 14px;  /* Reduced font size for input fields */
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 12px 20px;  /* Increased padding for button */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 16px;  /* Increased font size for button */
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        label {
+            font-size: 16px;  /* Larger label text for better visibility */
+            margin-top: 10px;
+            display: block;  /* Ensure labels are block elements */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Edit Student Details</h1>
+        <form action="{{ url_for('edit_student', student_id=student.id) }}" method="POST">
+            <label for="student_num">Student Number:</label>
+            <input type="number" name="student_num" id="student_num" value="{{ student.student_num }}" required>
+            
+            <label for="name">Student Name:</label>
+            <input type="text" name="name" id="name" value="{{ student.name }}" required>
+            
+            <label for="surname">Student Surname:</label>
+            <input type="text" name="surname" id="surname" value="{{ student.surname }}" required>
+            
+            <label for="age">Age:</label>
+            <input type="number" name="age" id="age" value="{{ student.age }}" required>
+            
+            <label for="year_of_study">Year of Study:</label>
+            <input type="number" name="year_of_study" id="year_of_study" value="{{ student.year_of_study }}" required>
+            
+            <label for="course">Course:</label>
+            <input type="text" name="course" id="course" value="{{ student.course }}" required>
+            
+            <input type="hidden" name="parent_id" value="{{ student.parent_id }}"> <!-- Hidden field if needed -->
+            
+            <button type="submit">Update Student</button>
+        </form>
+        <div>
+            <a href="{{ url_for('view_children') }}">Back to Student List</a>
+        </div>
+    </div>
+</body>
+</html>

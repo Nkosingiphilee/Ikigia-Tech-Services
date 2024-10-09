@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>School Authority Dashboard</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .back-to-home {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+            font-weight: bold;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid #dddddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        tr:hover {
+            background-color: #e1f5fe;
+        }
+
+        .no-students {
+            text-align: center;
+            font-style: italic;
+            color: #888;
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.4);
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 600px;
+            border-radius: 5px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-info {
+            margin-top: 10px;
+        }
+
+        .modal-info label {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ session['username'] }} (School Authority)</h1>
+        
+        <div class="back-to-home">
+            <a href="/logout" class="btn">Logout</a>
+        </div>
+
+        <h2>Student List</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Student Number</th>
+                    <th>Student Name</th>
+                    <th>Surname</th>  
+                    <th>Age</th>
+                    <th>Year of Study</th>  
+                    <th>Course</th>
+                    <th>Parent</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if students %}
+                    {% for student in students %}
+                        <tr>
+                            <td>{{ student.student_num }}</td>
+                            <td>{{ student.name }}</td>
+                            <td>{{ student.surname }}</td> 
+                            <td>{{ student.age }}</td>
+                            <td>{{ student.year_of_study }}</td>
+                            <td>{{ student.course }}</td> 
+                            <td>
+                                <a href="#" class="parent-link" data-parent-info="Username: {{ student.parent.username }}, First Name: {{ student.parent.first_name }}, Last Name: {{ student.parent.last_name }}, Phone: {{ student.parent.phone_number }}, Email: {{ student.parent.email }}"> {{ student.parent.username }} </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="7" class="no-students">No students found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+        <div class="attendance-reports">
+            <h2>Attendance Reports</h2>
+            <a href="{{ url_for('view_attendance_reports') }}" class="btn">View Attendance Reports</a>
+        </div>
+        
+    </div>
+
+    <!-- Modal for Parent Details -->
+    <div id="parentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Parent Details</h2>
+            <div class="modal-info" id="parentInfo"></div>
+        </div>
+    </div>
+
+    <script>
+        // Get modal element
+        var modal = document.getElementById("parentModal");
+        var span = document.getElementsByClassName("close")[0];
+
+        // When the user clicks on a parent name, open the modal
+        var parentLinks = document.getElementsByClassName("parent-link");
+        for (let link of parentLinks) {
+            link.onclick = function() {
+                var parentInfo = this.getAttribute("data-parent-info");
+                document.getElementById("parentInfo").innerHTML = parentInfo.replace(/, /g, '<br>'); // Display each piece of info on a new line
+                modal.style.display = "block";
+            };
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manage Users</title>
+    <link rel="stylesheet" href="/static/styles.css">  <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Manage Users</h1>
+        <div class="back-to-dashboard">
+            <a href="/admin_dashboard" class="btn">Back to Dashboard</a>
+        </div>
+
+        <h2>Parents</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if parents %}
+                    {% for parent in parents %}
+                        <tr>
+                            <td>{{ parent.username }}</td>
+                            <td>{{ parent.email }}</td>
+                            <td>
+                                <a href="/edit_parent/{{ parent.id }}" class="btn">Edit</a>
+                                <a href="/delete_parent/{{ parent.id }}" class="btn" onclick="return confirm('Are you sure you want to delete this parent?');">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No parents found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <h2>Admins</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if admins %}
+                    {% for admin in admins %}
+                        <tr>
+                            <td>{{ admin.username }}</td>
+                            <td>{{ admin.email }}</td>
+                            <td>
+                                <a href="/edit_admin/{{ admin.id }}" class="btn">Edit</a>
+                                <a href="/delete_admin/{{ admin.id }}" class="btn" onclick="return confirm('Are you sure you want to delete this admin?');">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No admins found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <h2>School Authorities</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if school_authorities %}
+                    {% for authority in school_authorities %}
+                        <tr>
+                            <td>{{ authority.username }}</td>
+                            <td>{{ authority.email }}</td>
+                            <td>
+                                <a href="/edit_school_authority/{{ authority.id }}" class="btn">Edit</a>
+                                <a href="/delete_school_authority/{{ authority.id }}" class="btn" onclick="return confirm('Are you sure you want to delete this school authority?');">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="3">No school authorities found.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+
+        <div class="add-user">
+            <h3>Add User</h3>
+            <form method="POST" action="/add_user">
+                <select name="role" required>
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="parent">Parent</option>
+                    <option value="admin">Admin</option>
+                    <option value="school_authority">School Authority</option>
+                </select>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit" class="btn">Add User</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

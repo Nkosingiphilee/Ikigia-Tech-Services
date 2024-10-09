@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Details</title>
+    <link rel="stylesheet" href="/static/styles.css">
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            color: #343a40;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        p {
+            font-size: 16px;
+            color: #495057;
+            margin: 10px 0;
+        }
+
+        strong {
+            color: #495057;
+        }
+
+        .back-to-children {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 25px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Student Details</h1>
+        <p><strong>Student Number:</strong> {{ student.student_num }}</p>
+        <p><strong>Name:</strong> {{ student.name }}</p>
+        <p><strong>Surname:</strong> {{ student.surname }}</p>
+        <p><strong>Age:</strong> {{ student.age }}</p>
+        <p><strong>Study Year:</strong> {{ student.year_of_study }}</p>
+        <p><strong>Course:</strong> {{ student.course }}</p>
+        <p><strong>Parent ID:</strong> {{ student.parent_id }}</p>
+        <div class="back-to-children">
+            <a href="{{ url_for('edit_student', student_id=student.id) }}" class="btn-edit">Edit Student</a>
+            <a href="/view_children" class="btn">Back to Registered Students</a>
+        </div>
+    </div>
+</body>
+</html>

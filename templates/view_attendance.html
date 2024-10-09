@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Attendance</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            margin: 20px;
+        }
+        h2 {
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Attendance Records</h2>
+        <!-- Date Filter Form -->
+        <div class="date-filter">
+            <form action="/view_attendance" method="POST">
+                <label for="date">Select Date:</label>
+                <input type="date" id="date" name="date" required>
+                <button type="submit">Filter</button>
+            </form>
+        </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Bus In</th>
+                    <th>Bus Check-In Status</th>
+                    <th>Bus Out</th>
+                    <th>Campus In</th>
+                    <th>Campus Check-In Status</th>
+                    <th>Campus Out</th>
+                    <th>Status</th>
+                    <th>Remarks</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for record in attendance_records %}
+                <tr>
+                    <td>{{ record.date }}</td>
+                    <td>{{ record.bus_in_time.strftime('%H:%M') if record.bus_in_time else 'N/A' }}</td>
+                    <td>{{ record.bus_check_in_status }}</td>
+                    <td>{{ record.bus_out_time.strftime('%H:%M') if record.bus_out_time else 'N/A' }}</td>
+                    <td>{{ record.campus_in_time.strftime('%H:%M') if record.campus_in_time else 'N/A' }}</td>
+                    <td>{{ record.campus_check_in_status }}</td>
+                    <td>{{ record.campus_out_time.strftime('%H:%M') if record.campus_out_time else 'N/A' }}</td>
+                    <td>{{ record.status }}</td>
+                    <td>{{ record.remarks }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <a href="{{ url_for('student_dashboard') }}" class="btn btn-primary">Back to Dashboard</a>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .attendance-section, .attendance-marking {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #ecf0f1;
+        }
+
+        .attendance-section h2, .attendance-marking h2 {
+            color: #2980b9;
+        }
+
+        button, .btn {
+            background-color: #2980b9;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover, .btn:hover {
+            background-color: #1a669c;
+        }
+
+        .attendance-history {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .logout-section {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .logout-section a {
+            color: #dc3545; /* Red for logout */
+            font-weight: bold;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome, {{ student.name }} {{ student.surname }}</h1>
+
+        <!-- Attendance Check-In and Check-Out Section -->
+        <div class="attendance-section">
+            <h2>Bus Attendance</h2>
+            <form action="/check_in_bus" method="POST">
+                <button type="submit" class="btn">Check In (Bus)</button>
+            </form>
+            <form action="/check_out_bus" method="POST">
+                <button type="submit" class="btn">Check Out (Bus)</button>
+            </form>
+        </div>
+
+        <div class="attendance-section">
+            <h2>Campus Attendance</h2>
+            <form action="/check_in_campus" method="POST">
+                <button type="submit" class="btn">Check In (Campus)</button>
+            </form>
+            <form action="/check_out_campus" method="POST">
+                <button type="submit" class="btn">Check Out (Campus)</button>
+            </form>
+        </div>
+
+        <div class="attendance-marking">
+            <h2>Mark Your Attendance</h2>
+            <form action="/mark_attendance" method="POST">
+                <label for="status">Select Status:</label>
+                <select name="status" id="status" required>
+                    <option value="Present">Present</option>
+                    <option value="Absent">Absent</option>
+                </select>
+                <button type="submit">Submit Attendance</button>
+            </form>
+        </div>
+
+        <!-- View Attendance Link -->
+        <div class="attendance-history">
+            <h2>Attendance History</h2>
+            <a href="{{ url_for('view_attendance') }}" class="btn">View Attendance History</a>
+        </div>
+
+        <!-- Logout Link -->
+        <div class="logout-section">
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

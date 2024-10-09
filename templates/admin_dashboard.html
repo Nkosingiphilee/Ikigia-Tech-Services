@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/static/styles.css">  <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <h1>Admin Dashboard</h1>
+        <div class="welcome-msg">
+            <h3>Welcome, Admin!</h3>
+            <p>You are logged in as <strong>{{ session['username'] }}</strong></p>
+        </div>
+        <div class="admin-actions">
+            <h2>Manage the System</h2>
+            <ul>
+                <li><a href="/manage_users">Manage Users (Admin/Parents)</a></li>
+                <li><a href="/manage_students">Manage Students</a></li>
+                <li><a href="/view_logs">View System Logs</a></li>
+                <li><a href="/settings">System Settings</a></li>
+                <li><a href="/register_school_authority" class="btn">Register School Authority</a></li>
+            </ul>
+        </div>
+        <div class="logout">
+            <a href="/logout" class="btn">Logout</a>
+        </div>
+    </div>
+    
+</body>
+</html>

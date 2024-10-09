@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parent Dashboard</title>
+    <style>
+        /* Resetting default margin, padding, and box sizing */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Styling for the entire body */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f4f8; /* Light background for clean look */
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Aligning content at the top */
+            min-height: 100vh;
+        }
+
+        /* Container for the dashboard */
+        .container {
+            width: 100%;
+            max-width: 700px; /* Reduced width for a more compact design */
+            margin: 40px auto;
+            padding: 30px;
+            background-color: #ffffff; /* White card background */
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            border-radius: 12px; /* Rounded corners */
+        }
+
+        /* Dashboard heading */
+        h1 {
+            font-size: 26px;
+            color: #343a40;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        /* Styling for the welcome message */
+        .welcome-msg h3 {
+            font-size: 20px;
+            color: #343a40;
+            text-align: center;
+        }
+
+        /* Styling for action links */
+        .parent-actions {
+            margin-top: 20px;
+        }
+
+        .parent-actions h2 {
+            font-size: 22px;
+            margin-bottom: 15px;
+            color: #343a40;
+        }
+
+        .parent-actions ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .parent-actions li {
+            margin-bottom: 15px;
+        }
+
+        /* Action buttons for viewing children and alerts */
+        .parent-actions a {
+            text-decoration: none;
+            color: #fff;
+            background-color: #007bff;
+            padding: 10px 15px;
+            font-weight: bold;
+            display: inline-block;
+            border-radius: 8px;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Hover effect for action buttons */
+        .parent-actions a:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px); /* Slight upward lift */
+        }
+
+        /* Styling for the select student section */
+        .select-student {
+            margin-top: 30px;
+            background-color: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid #dee2e6;
+        }
+
+        /* Section title for selecting a student */
+        .select-student h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #343a40;
+        }
+
+        /* Styling for the label and select dropdown */
+        .select-student label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 10px;
+            color: #495057;
+        }
+
+        /* Smaller dropdown size */
+        .select-student select {
+            padding: 6px;
+            width: 50%; /* Reduced width */
+            border-radius: 5px;
+            border: 1px solid #ced4da;
+            font-size: 14px; /* Smaller font size */
+            transition: border-color 0.3s ease;
+        }
+
+        /* Hover and focus effects for select dropdown */
+        .select-student select:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.2);
+        }
+
+        /* Smaller submit button for viewing attendance */
+        .select-student .btn {
+            margin-top: 10px;
+            padding: 8px 12px; /* Reduced padding */
+            background-color: #007bff;
+            color: #fff;
+            text-align: center;
+            border-radius: 8px;
+            width: auto; /* Adjusts width to content */
+            font-size: 14px; /* Smaller font size */
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Hover effect for the submit button */
+        .select-student .btn:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Logout button styling */
+        .logout {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .logout .btn {
+            background-color: #dc3545;
+            padding: 10px 20px; /* Consistent size with other buttons */
+        }
+
+        .logout .btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Parent Dashboard</h1>
+        <div class="welcome-msg">
+            <h3>Welcome, {{ session['username'] }}</h3>
+            
+        </div>
+
+        <div class="parent-actions">
+            <h2>Track Your Registered Students</h2>
+            <ul>
+                <li><a href="/view_children">View Children</a></li>
+                <li><a href="/view_sent_alerts">Receive Alerts</a></li>
+                <li><a href="/register_student" class="btn">Register your child</a></li>
+            </ul>
+        </div>
+        <div class="select-student">
+            <h2>Select Student to View Attendance</h2>
+            <form action="/view_student_attendance" method="POST">
+                <label for="student">Choose a Student:</label>
+                <select name="student_id" id="student" required>
+                    <option value="" disabled selected>Select Student</option> <!-- Default placeholder option -->
+                    {% for student in students %}
+                        <option value="{{ student.id }}">{{ student.name }} {{ student.surname }} (Student Number: {{ student.student_num }})</option>
+                    {% endfor %}
+                </select>
+                <button type="submit" class="btn">View Attendance</button>
+            </form>
+        </div>
+        
+
+        <div class="logout">
+            <a href="/logout" class="btn">Logout</a>
+        </div>
+    </div>
+</body>
+</html>

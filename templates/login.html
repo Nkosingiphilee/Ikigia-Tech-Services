@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #74ebd5 0%, #ACB6E5 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+        }
+
+        .login-box {
+            background: #ffffff;
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #333;
+            font-size: 28px;
+            letter-spacing: 1px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin: 10px 0 5px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            border-color: #74ebd5;
+            box-shadow: 0 0 5px rgba(116, 235, 213, 0.6);
+        }
+
+        button {
+            padding: 12px 20px;
+            background: #74ebd5;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: #66c4bb;
+        }
+
+        p {
+            margin-top: 15px;
+            color: #333;
+        }
+
+        a {
+            color: #74ebd5;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hide fields initially */
+        #studentFields,
+        #userFields {
+            display: none;
+        }
+    </style>
+
+<body>
+    <div class="container">
+        <div class="login-box">
+            <h2>Login</h2>
+            <form action="{{ url_for('login') }}" method="POST" id="loginForm">
+                {{ form.hidden_tag() }} <!-- CSRF token -->
+
+                <label for="role">Select Role:</label>
+                {{ form.role(class="form-control", onchange="toggleFields()") }}
+
+                <div id="studentFields" style="display: none;">
+                    {{ form.name.label() }}
+                    {% if form.name.errors %}
+                    {{ form.name(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.name.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.name(class="form-control",required=True) }}
+                    {% endif %}
+                </div>
+
+                <div id="userFields" style="display: block;"> 
+                    {{ form.username.label() }}
+                    {% if form.username.errors %}
+                    {{ form.username(class="form-control form-control-lg is-invalid") }}
+                    <div class="invalid-feedback">
+                        {% for error in form.username.errors %}
+                        <span style="color: red;">{{ error }}</span>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    {{ form.username(class="form-control",required=True) }}
+                    {% endif %}
+                </div>
+
+                {{ form.password.label() }}
+                {% if form.password.errors %}
+                {{ form.password(class="form-control form-control-lg is-invalid") }}
+                <div class="invalid-feedback">
+                    {% for error in form.password.errors %}
+                    <span style="color: red;">{{ error }}</span>
+                    {% endfor %}
+                </div>
+                {% else %}
+                {{ form.password(class="form-control",required=True) }}
+                {% endif %}
+
+                <button type="submit" class="btn btn-primary">{{ form.submit.label }}</button>
+            </form>
+            <p>Don't have an account? <a href="{{ url_for('register') }}">Register here</a></p>
+            <script>
+                function toggleFields() {
+                    const role = document.getElementById("role").value;
+                    const studentFields = document.getElementById("studentFields");
+                    const userFields = document.getElementById("userFields");
+
+                    if (role === "student") {
+                        studentFields.style.display = "block";
+                        userFields.style.display = "none";
+                    } else {
+                        studentFields.style.display = "none";
+                        userFields.style.display = "block";
+                    }
+                }
+
+                // Initialize the form to set the correct visibility
+                toggleFields();
+            </script>
+        </div>
+    </div>
+
+</body>
+
+</html>
