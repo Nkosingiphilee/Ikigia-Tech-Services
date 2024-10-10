@@ -16,11 +16,11 @@
         <div class="admin-actions">
             <h2>Manage the System</h2>
             <ul>
-                <li><a href="/manage_users">Manage Users (Admin/Parents)</a></li>
-                <li><a href="/manage_students">Manage Students</a></li>
+                <li><a href="{{url_for('manage_users')}}">Manage Users (Admin/Parents)</a></li>
+                <li><a href="{{url_for('manage_students')}}">Manage Students</a></li>
                 <li><a href="/view_logs">View System Logs</a></li>
                 <li><a href="/settings">System Settings</a></li>
-                <li><a href="/register_school_authority" class="btn">Register School Authority</a></li>
+                <li><a href="{{url_for('register_school_authority')}}" class="btn">Register School Authority</a></li>
             </ul>
         </div>
         <div class="logout">
