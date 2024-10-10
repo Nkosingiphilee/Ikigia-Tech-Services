@@ -1,13 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register School Authority</title>
-    <link rel="stylesheet" href="/static/styles.css">  <!-- Link to your CSS file -->
+    <link rel="stylesheet" href="/static/styles.css"> <!-- Link to your CSS file -->
+    <style>
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            /* Reduced space below heading */
+            font-size: 20px;
+            /* Reduced font size */
+            color: #333;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            max-width: 1200px;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            /* Reduced margin for a tighter layout */
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+            /* Smaller label text */
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 8px;
+            /* Smaller padding */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            /* Reduced space between inputs */
+            outline: none;
+            font-size: 14px;
+            /* Reduced font size */
+            transition: all 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            border-color: #74ebd5;
+            box-shadow: 0 0 5px rgba(116, 235, 213, 0.6);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007BFF;
+            text-decoration: none;
+            border-radius: 5px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="container">
+
+
+       <div class="container">
         <h1>Register School Authority</h1>
         <form method="POST" action="/register_school_authority">
             <div class="form-group">
@@ -36,5 +112,7 @@
             <a href="/admin_dashboard" class="btn">Back to Dashboard</a>
         </div>
     </div>
+
 </body>
+
 </html>
